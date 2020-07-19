@@ -13,8 +13,8 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:4200")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS")
-                .allowedHeaders("Content-Type", "Date", "Total-Count", "loginInfo")
-                .exposedHeaders("Content-Type", "Date", "Total-Count", "loginInfo")
+                .allowedHeaders("Content-Type", "Date", "Total-Count", "loginInfo", "x-access-token")
+                .exposedHeaders("Content-Type", "Date", "Total-Count", "loginInfo" , "x-access-token")
                 .maxAge(3600);
     }
 }
