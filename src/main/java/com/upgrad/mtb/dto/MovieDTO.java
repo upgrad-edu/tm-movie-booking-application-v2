@@ -15,5 +15,5 @@ public class MovieDTO {
     String trailerURL;
     int languageId;
     int statusId;
-    List<TheatreDTO> theatres;
+    List<Integer> theatreIds;
 }

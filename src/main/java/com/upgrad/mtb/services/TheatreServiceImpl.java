@@ -39,7 +39,7 @@ public class TheatreServiceImpl implements TheatreService {
         savedTheatre.setTheatreName(theatre.getTheatreName());
         savedTheatre.setNoOfSeats(theatre.getNoOfSeats());
         savedTheatre.setBookings(theatre.getBookings());
-        savedTheatre.setMovie(theatre.getMovie());
+        savedTheatre.setMovies(theatre.getMovies());
         savedTheatre.setCity(theatre.getCity());
         return theatreDAO.save(savedTheatre);
     }

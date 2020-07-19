@@ -67,25 +67,10 @@ public class AuthController {
             CustomerDTO savedCustomerDTO = entityDTOConverter.convertToCustomerDTO(savedCustomer);
             savedCustomerDTO.setJwtToken(token);
             savedCustomerDTO.setRefreshToken(refreshToken);
-            /*customerService.addToken(token);
-            customerService.addRefreshToken(token,savedCustomer);
-            customerService.updateRefreshTokenAccessTokenMap(refreshToken,token);
-            customerService.updateAccessTokenUserMap("",token,savedCustomer);*/
             return ResponseEntity.status(HttpStatus.CREATED).body(savedCustomerDTO);
         } catch (Exception e) {
             throw new CustomException("Username " + customerDTO.getUsername() + " already registered", HttpStatus.UNPROCESSABLE_ENTITY);
         }
-    }
-
-
-    @RequestMapping(method = RequestMethod.GET, value = "/me")
-    @ResponseBody
-    public ResponseEntity getUserDetails(@RequestHeader(value = "X-ACCESS-TOKEN") String accessToken) throws CustomerDetailsNotFoundException {
-        Customer customer = customerService.getCustomerDetailsByUsername(jwtTokenProvider.getUsername(accessToken));
-        Map<String, String> model = new HashMap<>();
-        model.put("username", customer.getUsername());
-        model.put("name", customer.getFirstName() + " " + customer.getLastName());
-        return ResponseEntity.ok(model);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/access-tokens")
@@ -109,32 +94,14 @@ public class AuthController {
             String token = jwtTokenProvider.createToken(username);
             CustomerDTO savedCustomerDTO = entityDTOConverter.convertToCustomerDTO(savedCustomer);
             savedCustomerDTO.setJwtToken(token);
-            savedCustomerDTO.setJwtToken(refreshToken);
-            /*customerService.addToken(token);
-            customerService.addRefreshToken(token,savedCustomer);
-            customerService.updateRefreshTokenAccessTokenMap(refreshToken,token);
-            customerService.updateAccessTokenUserMap(oldToken,token,savedCustomer);*/
+            savedCustomerDTO.setRefreshToken(refreshToken);
             return ResponseEntity.status(HttpStatus.CREATED).body(savedCustomerDTO);
         } catch (Exception e) {
             throw new CustomException("Username " + loginDTO.getUsername() + "not registered/password incorrect", HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/access-tokens")
-    @ResponseBody
-    public ResponseEntity signOut(@RequestBody RefreshTokenRequest data) throws CustomException {
-        try {
-            /*String refreshToken = data.getRefresh_token();
-            String accessToken = customerService.getCurrentAccessTokenFromRefreshToken(refreshToken);
-            customerService.removeUserFromAccessTokenMap(customerService.getCurrentAccessTokenFromRefreshToken(refreshToken));
-            customerService.removeRefreshTokenAccessTokenMap(refreshToken);
-            customerService.removeRefreshToken(refreshToken);
-            customerService.removeTokenIfPresent(accessToken);*/
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
-        } catch (AuthenticationException e) {
-            throw new CustomException("Refresh token not valid", HttpStatus.UNPROCESSABLE_ENTITY);
-        }
-    }
+
 
     @RequestMapping(method = RequestMethod.PUT, value = "/resetPassword")
     @ResponseBody
@@ -159,38 +126,9 @@ public class AuthController {
             CustomerDTO savedCustomerDTO = entityDTOConverter.convertToCustomerDTO(savedCustomer);
             savedCustomerDTO.setJwtToken(token);
             savedCustomerDTO.setRefreshToken(refreshToken);
-            /*customerService.addToken(token);
-            customerService.addRefreshToken(token,savedCustomer);
-            customerService.updateRefreshTokenAccessTokenMap(refreshToken,token);
-            customerService.updateAccessTokenUserMap(oldToken,token,savedCustomer);*/
             return ResponseEntity.status(HttpStatus.CREATED).body(savedCustomerDTO);
         } catch (Exception e) {
             throw new CustomException("Username :" + resetPasswordDTO.getUsername() + "Invalid UserName/Password", HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
-
-
-    /*@RequestMapping(method = RequestMethod.POST, value = "/access-tokens/refresh")
-    @ResponseBody
-    public ResponseEntity refreshToken(@RequestBody RefreshTokenRequest data) throws CustomException {
-        try {
-            String refreshToken = data.getRefresh_token();
-            *//*if (customerService.getUserfromRefreshToken(refreshToken) == null) {
-                throw new CustomException("Refresh token not valid", HttpStatus.UNPROCESSABLE_ENTITY);
-            }*//*
-           *//* String token = jwtTokenProvider.createToken(customerService.getUserfromRefreshToken(refreshToken).getUsername());
-            customerService.updateAccessTokenUserMap(customerService.getCurrentAccessTokenFromRefreshToken(refreshToken), token,
-                    null);
-            customerService.removeTokenIfPresent(customerService.getCurrentAccessTokenFromRefreshToken(refreshToken));
-            customerService.updateRefreshTokenAccessTokenMap(refreshToken, token);
-            customerService.addToken(token);
-
-            Map<String, String> model = new HashMap<>();
-            model.put("jwt", token);
-            return ResponseEntity.ok(model);*//*
-        } catch (AuthenticationException | CustomException e) {
-
-            throw new CustomException("Refresh token not valid", HttpStatus.UNPROCESSABLE_ENTITY);
-        }
-    }*/
 }

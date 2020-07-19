@@ -43,16 +43,6 @@ public class CustomersController {
         return new ResponseEntity<String>("Hello World To All From CustomerController", HttpStatus.OK);
     }
 
-    /*//CUSTOMER CONTROLLER
-    @PostMapping(value="/customers",consumes= MediaType.APPLICATION_JSON_VALUE,headers="Accept=application/json")
-    public ResponseEntity newCustomer(@RequestBody CustomerDTO customerDTO) throws APIException , CustomerUserNameExistsException, UserTypeDetailsNotFoundException {
-        ResponseEntity responseEntity = null;
-            customerValidator.validateCustomer(customerDTO);
-            Customer responseCustomer = customerService.acceptCustomerDetails(customerDTO);
-            responseEntity = ResponseEntity.ok(responseCustomer);
-            return responseEntity;
-    }*/
-
 
     @GetMapping("/customers/{id}")
     @ResponseBody
@@ -64,32 +54,12 @@ public class CustomersController {
     }
 
     @PutMapping("/customers/{id}")
-    public ResponseEntity updateCustomerDetails(@PathVariable(name = "id") int id , @RequestBody CustomerDTO customerDTO , @RequestHeader(value = "X-Access-Token") String accessToken) throws CustomerDetailsNotFoundException, UserTypeDetailsNotFoundException, TheatreDetailsNotFoundException {
+    public ResponseEntity updateCustomerDetails(@PathVariable(name = "id") int id , @RequestBody CustomerDTO customerDTO , @RequestHeader(value = "X-Access-Token") String accessToken) throws CustomerDetailsNotFoundException, UserTypeDetailsNotFoundException, TheatreDetailsNotFoundException, BookingDetailsNotFoundException {
         Customer newCustomer = dtoEntityConverter.convertToCustomerEntity(customerDTO);
         Customer updatedCustomer =  customerService.updateCustomerDetails(id, newCustomer);
         CustomerDTO updatedCustomerDTO = entityDTOConverter.convertToCustomerDTO(updatedCustomer);
         return ResponseEntity.ok(updatedCustomerDTO);
     }
-
-    @GetMapping(value="/customers",produces=MediaType.APPLICATION_JSON_VALUE,headers="Accept=application/json")
-    public ResponseEntity findAllCustomers() throws CustomerDetailsNotFoundException {
-        List<Customer> customers = customerService.getAllCustomerDetails();
-        List<CustomerDTO> customerDTOList = new ArrayList<>();
-        for(Customer customer : customers){
-            customerDTOList.add(entityDTOConverter.convertToCustomerDTO(customer));
-        }
-        System.out.println("Number of customers :" + customerDTOList.size());
-        return ResponseEntity.ok(customerDTOList);
-    }
-
-    @DeleteMapping("/customers/{id}")
-    @ResponseBody
-    public ResponseEntity<String> removeCustomerDetails(@PathVariable(name = "id") int id) throws CustomerDetailsNotFoundException{
-        System.out.println("Remove customer details : " + id);
-        customerService.deleteCustomer(id);
-        return new ResponseEntity<>("Customer details successfully removed ",HttpStatus.OK);
-    }
-
 
     @GetMapping(value="/customers/{customerId}/bookings",produces=MediaType.APPLICATION_JSON_VALUE,headers="Accept=application/json")
     public ResponseEntity getAllBookingsForCustomer(@PathVariable("customerId") int id) throws CustomerDetailsNotFoundException {
@@ -102,7 +72,6 @@ public class CustomersController {
         return  ResponseEntity.ok(bookingDTOList);
     }
 
-    //check this
     @DeleteMapping(value="/customers/{customerId}/bookings",produces=MediaType.APPLICATION_JSON_VALUE,headers="Accept=application/json")
     public ResponseEntity<String> deleteBookingForCustomer(@PathVariable("customerId") int customerId) throws CustomerDetailsNotFoundException, BookingDetailsNotFoundException {
         Customer customer = customerService.getCustomerDetails(customerId);

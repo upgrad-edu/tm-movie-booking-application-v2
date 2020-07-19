@@ -189,18 +189,4 @@ public class CustomerServiceImpl implements CustomerService {
         return customerDAO.save(customer);
     }
 
-    @Override
-    public boolean deleteCustomer(int id) throws CustomerDetailsNotFoundException {
-        System.out.println("Deleting customer details : customerServiceImpl ");
-        Customer customer = getCustomerDetails(id);
-        System.out.println(customer.toString());
-        customerDAO.delete(customer);
-        return true;
-    }
-
-    @Override
-    public List<Customer> getAllCustomerDetails() {
-        logger.debug("Entered getAllCustomerDetails : customerServiceImpl");
-        return customerDAO.findAll();
-    }
 }

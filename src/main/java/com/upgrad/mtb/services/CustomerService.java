@@ -15,6 +15,4 @@ public interface CustomerService {
      public Customer getCustomerDetailsByUsername(String username) throws CustomerDetailsNotFoundException;
      public UserDetails loadCustomerDetails(String username) throws CustomerDetailsNotFoundException;
      public Customer updateCustomerDetails(int initialCustomerId, Customer customer) throws CustomerDetailsNotFoundException, UserTypeDetailsNotFoundException;
-     public boolean deleteCustomer(int id) throws CustomerDetailsNotFoundException;
-     public List<Customer> getAllCustomerDetails();
 }

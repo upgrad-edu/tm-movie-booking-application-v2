@@ -1,5 +1,6 @@
 package com.upgrad.mtb.services;
 
+import com.upgrad.mtb.beans.Movie;
 import com.upgrad.mtb.beans.Theatre;
 import com.upgrad.mtb.daos.BookingDAO;
 import com.upgrad.mtb.beans.Booking;
@@ -39,7 +40,8 @@ public class BookingServiceImpl implements BookingService  {
         Date parsedBookingDate = sdf.parse(formatBookingDate);
         int bookingSlot = DateDifference.differenceBetweenDates(todaysDate,parsedBookingDate);
         Theatre theatre = theatreService.getTheatreDetails(bookingDTO.getTheatreId());
-        if(theatre.getMovie().getStatus().getStatus().equalsIgnoreCase("Released")){
+        List<Movie> moviesList = theatre.getMovies();
+        if(moviesList.get(moviesList.size()-1).getStatus().getStatus().equalsIgnoreCase("Released")){
             Booking newBooking = new Booking();
             newBooking.setNoOfSeats(bookingDTO.getNoOfSeats());
             newBooking.setBookingDate(bookingDTO.getBookingDate());

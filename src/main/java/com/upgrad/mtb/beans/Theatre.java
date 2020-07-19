@@ -42,18 +42,18 @@ public class Theatre {
     @JsonManagedReference("theatre_booking")
     List<Booking> bookings;
 
-    @ManyToOne
+    @ManyToMany(mappedBy = "theatres" , fetch = FetchType.EAGER , cascade = CascadeType.ALL)
     @JsonBackReference("movie_theatre")
-    private Movie movie;
+    private List<Movie> movies;
 
     public Theatre(){}
 
-    public Theatre(String theatreName, int noOfSeats, int ticketPrice, City city, List<Booking> bookings, Movie movie) {
+    public Theatre(String theatreName, int noOfSeats, int ticketPrice, City city, List<Booking> bookings, List<Movie> movies) {
         this.theatreName = theatreName;
         this.noOfSeats = noOfSeats;
         this.ticketPrice = ticketPrice;
         this.city = city;
         this.bookings = bookings;
-        this.movie = movie;
+        this.movies = movies;
     }
 }

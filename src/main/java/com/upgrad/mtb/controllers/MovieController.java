@@ -107,13 +107,6 @@ public class MovieController {
             }
     }
 
-    @DeleteMapping("/movies/{id}")
-    public ResponseEntity<String> removeMovieDetails(@PathVariable(name = "id") int id) throws MovieDetailsNotFoundException{
-        movieService.deleteMovie(id);
-        logger.debug("Deleting movie details : " + id);
-        return new ResponseEntity<>("Movie details successfully removed ",HttpStatus.OK);
-    }
-
     //inter related APIs
     @GetMapping(value="/movies/{movieId}/theatres",produces=MediaType.APPLICATION_JSON_VALUE,headers="Accept=application/json")
     public ResponseEntity findAllTheatresForMovie( @PathVariable("movieId") int movieId) throws MovieDetailsNotFoundException {
@@ -125,7 +118,7 @@ public class MovieController {
     @DeleteMapping(value="/movies/{movieId}/theatres/{theatreId}",produces=MediaType.APPLICATION_JSON_VALUE,headers="Accept=application/json")
     public ResponseEntity removeTheatreForMovie(@PathVariable("movieId") int movieId , @PathVariable("theatreId") int theatreId) throws MovieDetailsNotFoundException, TheatreDetailsNotFoundException {
         Theatre theatre = theatreService.getTheatreDetails(theatreId);
-        theatre.setMovie(null);
+        theatre.setMovies(null);
         Movie movie = movieService.getMovieDetails(movieId);
         List<Theatre> theatres = movie.getTheatres();
         theatres.remove(theatre);

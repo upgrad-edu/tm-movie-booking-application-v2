@@ -18,5 +18,5 @@ public class CustomerDTO {
     String jwtToken;
     String refreshToken;
     List<String> phoneNumbers;
-    List<BookingDTO> bookings;
+    List<Integer> bookingIds;
 }

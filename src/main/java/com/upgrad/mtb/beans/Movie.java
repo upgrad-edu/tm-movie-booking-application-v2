@@ -49,8 +49,7 @@ public class Movie {
     @JsonBackReference("status_movie")
     private Status status;
 
-    @OneToMany(mappedBy = "movie" , fetch = FetchType.EAGER)
-    @MapKey
+    @ManyToMany
     @JsonManagedReference("movie_theatre")
     List<Theatre> theatres;
 /*

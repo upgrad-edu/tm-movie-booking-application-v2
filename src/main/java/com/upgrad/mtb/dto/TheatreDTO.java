@@ -13,6 +13,6 @@ public class TheatreDTO {
     int noOfSeats;
     int ticketPrice;
     int cityId;
-    int movieId;
-    List<BookingDTO> bookings;
+    List<Integer> movieIds;
+    List<Integer> bookingIds;
 }

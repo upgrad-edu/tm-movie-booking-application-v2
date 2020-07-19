@@ -1,12 +1,14 @@
 package com.upgrad.mtb.utils;
 
-import com.upgrad.mtb.beans.*;
+import com.upgrad.mtb.beans.Booking;
+import com.upgrad.mtb.beans.Customer;
+import com.upgrad.mtb.beans.Movie;
+import com.upgrad.mtb.beans.Theatre;
 import com.upgrad.mtb.dto.BookingDTO;
 import com.upgrad.mtb.dto.CustomerDTO;
 import com.upgrad.mtb.dto.MovieDTO;
 import com.upgrad.mtb.dto.TheatreDTO;
 import com.upgrad.mtb.services.*;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -39,12 +41,14 @@ public class EntityDTOConverter {
         movieDTO.setDuration(movie.getDuration());
         movieDTO.setLanguageId(movie.getLanguage().getId());
         movieDTO.setStatusId(movie.getStatus().getId());
-        List<Theatre> theatreList = movie.getTheatres();
-        List<TheatreDTO> theatreDTOList = new ArrayList<>();
-        for(Theatre theatre :theatreList){
-            theatreDTOList.add(convertToTheatreDTO(theatre));
+        if(movie.getTheatres() != null) {
+            List<Theatre> theatres = movie.getTheatres();
+            List<Integer> theatreIds = new ArrayList<>();
+            for (Theatre theatre : theatres) {
+                theatreIds.add(theatre.getId());
+            }
+            movieDTO.setTheatreIds(theatreIds);
         }
-        movieDTO.setTheatres(theatreDTOList);
         return movieDTO;
     }
 
@@ -52,16 +56,25 @@ public class EntityDTOConverter {
         TheatreDTO theatreDTO = new TheatreDTO();
         theatreDTO.setTheatreId(theatre.getId());
         theatreDTO.setCityId(theatre.getCity().getId());
-        theatreDTO.setMovieId(theatre.getMovie().getId());
+        if(theatre.getMovies() != null) {
+            List<Movie> movies = theatre.getMovies();
+            List<Integer> movieIds = new ArrayList<>();
+            for (Movie movie : movies) {
+                movieIds.add(movie.getId());
+            }
+            theatreDTO.setMovieIds(movieIds);
+        }
         theatreDTO.setNoOfSeats(theatre.getNoOfSeats());
         theatreDTO.setTheatreName(theatre.getTheatreName());
         theatreDTO.setTicketPrice(theatre.getTicketPrice());
-        List<Booking> bookingList = theatre.getBookings();
-        List<BookingDTO> bookingDTOList = new ArrayList<>();
-        for(Booking booking :bookingList){
-            bookingDTOList.add(convertToBookingDTO(booking));
+        if(theatre.getBookings() != null) {
+            List<Booking> bookingList = theatre.getBookings();
+            List<Integer> bookingIds = new ArrayList<>();
+            for (Booking booking : bookingList) {
+                bookingIds.add(booking.getId());
+            }
+            theatreDTO.setBookingIds(bookingIds);
         }
-        theatreDTO.setBookings(bookingDTOList);
         return theatreDTO;
     }
 
@@ -85,12 +98,14 @@ public class EntityDTOConverter {
         customerDTO.setCustomerId(customer.getId());
         customerDTO.setUserTypeId(customer.getUserType().getId());
         customerDTO.setPhoneNumbers(customer.getPhoneNumbers());
-        List<Booking> bookingList = customer.getBookings();
-        List<BookingDTO> bookingDTOList = new ArrayList<>();
-        for(Booking booking : bookingList){
-            bookingDTOList.add(convertToBookingDTO(booking));
+        if(customer.getBookings() != null) {
+            List<Booking> bookingList = customer.getBookings();
+            List<Integer> bookingIds = new ArrayList<>();
+            for (Booking booking : bookingList) {
+                bookingIds.add(booking.getId());
+            }
+            customerDTO.setBookingIds(bookingIds);
         }
-        customerDTO.setBookings(bookingDTOList);
         return customerDTO;
     }
 

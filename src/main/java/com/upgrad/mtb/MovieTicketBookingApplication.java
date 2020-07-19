@@ -8,8 +8,6 @@ import com.upgrad.mtb.daos.CityDAO;
 import com.upgrad.mtb.daos.LanguageDAO;
 import com.upgrad.mtb.daos.StatusDAO;
 import com.upgrad.mtb.daos.UserTypeDAO;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

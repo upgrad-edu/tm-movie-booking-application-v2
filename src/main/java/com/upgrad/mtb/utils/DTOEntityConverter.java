@@ -1,13 +1,15 @@
 package com.upgrad.mtb.utils;
 
-import com.upgrad.mtb.beans.*;
+import com.upgrad.mtb.beans.Booking;
+import com.upgrad.mtb.beans.Customer;
+import com.upgrad.mtb.beans.Movie;
+import com.upgrad.mtb.beans.Theatre;
 import com.upgrad.mtb.dto.BookingDTO;
 import com.upgrad.mtb.dto.CustomerDTO;
 import com.upgrad.mtb.dto.MovieDTO;
 import com.upgrad.mtb.dto.TheatreDTO;
 import com.upgrad.mtb.exceptions.*;
 import com.upgrad.mtb.services.*;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,6 +33,8 @@ public class DTOEntityConverter {
     StatusService statusService;
     @Autowired
     UserTypeService userTypeService;
+    @Autowired
+    BookingService bookingService;
 
     public Movie convertToMovieEntity(MovieDTO movieDTO) throws StatusDetailsNotFoundException, LanguageDetailsNotFoundException, TheatreDetailsNotFoundException, CustomerDetailsNotFoundException, MovieDetailsNotFoundException {
         Movie movie = new Movie();
@@ -42,27 +46,36 @@ public class DTOEntityConverter {
         movie.setTrailerURL(movieDTO.getTrailerURL());
         movie.setStatus(statusService.getStatusDetails(movieDTO.getStatusId()));
         List<Theatre> theatreList = new ArrayList<>();
-        for(TheatreDTO theatreDTO : movieDTO.getTheatres()){
-            theatreList.add(convertToTheatreEntity(theatreDTO));
+        if(movieDTO.getTheatreIds() != null) {
+            for (Integer theatreId : movieDTO.getTheatreIds()) {
+                theatreList.add(theatreService.getTheatreDetails(theatreId));
+            }
         }
         movie.setLanguage(languageService.getLanguageDetails(movieDTO.getLanguageId()));
         movie.setTheatres(theatreList);
         return movie;
     }
 
-    public Theatre convertToTheatreEntity(TheatreDTO theatreDTO) throws TheatreDetailsNotFoundException, CustomerDetailsNotFoundException, MovieDetailsNotFoundException {
+    public Theatre convertToTheatreEntity(TheatreDTO theatreDTO) throws TheatreDetailsNotFoundException, CustomerDetailsNotFoundException, MovieDetailsNotFoundException, LanguageDetailsNotFoundException, StatusDetailsNotFoundException, BookingDetailsNotFoundException {
         Theatre theatre = new Theatre();
         theatre.setTicketPrice(theatreDTO.getTicketPrice());
         theatre.setNoOfSeats(theatreDTO.getNoOfSeats());
         theatre.setTheatreName(theatreDTO.getTheatreName());
         theatre.setCity(cityService.getCityDetails(theatreDTO.getCityId()));
-        theatre.setMovie(movieService.getMovieDetails(theatreDTO.getMovieId()));
-        List<BookingDTO> bookingDTOList = theatreDTO.getBookings();
-        List<Booking> bookingList = new ArrayList<>();
-        for(BookingDTO bookingDTO : bookingDTOList){
-            bookingList.add(convertToBookingEntity(bookingDTO));
+        List<Movie> movieList = new ArrayList<>();
+        if(theatreDTO.getMovieIds() != null) {
+            for (Integer movieId : theatreDTO.getMovieIds()) {
+                movieList.add(movieService.getMovieDetails(movieId));
+            }
+            theatre.setMovies(movieList);
         }
-        theatre.setBookings(bookingList);
+        List<Booking> bookingList = new ArrayList<>();
+        if(theatreDTO.getBookingIds() != null) {
+            for (Integer bookingId : theatreDTO.getBookingIds()) {
+                bookingList.add(bookingService.getBookingDetails(bookingId));
+            }
+            theatre.setBookings(bookingList);
+        }
         return theatre;
     }
 
@@ -75,7 +88,7 @@ public class DTOEntityConverter {
         return booking;
     }
 
-    public Customer convertToCustomerEntity(CustomerDTO customerDTO) throws UserTypeDetailsNotFoundException, TheatreDetailsNotFoundException, CustomerDetailsNotFoundException {
+    public Customer convertToCustomerEntity(CustomerDTO customerDTO) throws UserTypeDetailsNotFoundException, TheatreDetailsNotFoundException, CustomerDetailsNotFoundException, BookingDetailsNotFoundException {
         Customer customer = new Customer();
         customer.setFirstName(customerDTO.getFirstName());
         customer.setLastName(customerDTO.getLastName());
@@ -86,11 +99,12 @@ public class DTOEntityConverter {
         System.out.println(userTypeService.getUserTypeDetails(customerDTO.getUserTypeId()));
         customer.setUserType(userTypeService.getUserTypeDetails(customerDTO.getUserTypeId()));
         customer.setDateOfBirth(customerDTO.getDateOfBirth());
-        List<BookingDTO> bookingDTOList = customerDTO.getBookings();
         List<Booking> bookings = new ArrayList<>();
-        for(BookingDTO bookingDTO : bookingDTOList)
-            bookings.add(convertToBookingEntity(bookingDTO));
-        customer.setBookings(bookings);
+        if(customerDTO.getBookingIds() != null) {
+            for (Integer bookingId : customerDTO.getBookingIds())
+                bookings.add(bookingService.getBookingDetails(bookingId));
+            customer.setBookings(bookings);
+        }
         return customer;
     }
 }

@@ -6,10 +6,7 @@ import com.upgrad.mtb.beans.Theatre;
 import com.upgrad.mtb.dto.BookingDTO;
 import com.upgrad.mtb.dto.CustomerDTO;
 import com.upgrad.mtb.dto.TheatreDTO;
-import com.upgrad.mtb.exceptions.CustomerDetailsNotFoundException;
-import com.upgrad.mtb.exceptions.MovieDetailsNotFoundException;
-import com.upgrad.mtb.exceptions.TheatreDetailsNotFoundException;
-import com.upgrad.mtb.exceptions.UserTypeDetailsNotFoundException;
+import com.upgrad.mtb.exceptions.*;
 import com.upgrad.mtb.services.TheatreService;
 import com.upgrad.mtb.utils.DTOEntityConverter;
 import com.upgrad.mtb.utils.EntityDTOConverter;
@@ -41,7 +38,7 @@ public class TheatreController {
 
 
     @PostMapping(value="/theatres",consumes= MediaType.APPLICATION_JSON_VALUE,headers="Accept=application/json")
-    public ResponseEntity newTheatre(@RequestBody TheatreDTO theatreDTO) throws MovieDetailsNotFoundException, TheatreDetailsNotFoundException, CustomerDetailsNotFoundException {
+    public ResponseEntity newTheatre(@RequestBody TheatreDTO theatreDTO) throws MovieDetailsNotFoundException, TheatreDetailsNotFoundException, CustomerDetailsNotFoundException, StatusDetailsNotFoundException, LanguageDetailsNotFoundException, BookingDetailsNotFoundException {
         Theatre newTheatre = dtoEntityConverter.convertToTheatreEntity(theatreDTO);
         Theatre savedTheatre = theatreService.acceptTheatreDetails(newTheatre);
         TheatreDTO savedTheatreDTO = entityDTOConverter.convertToTheatreDTO(savedTheatre);
@@ -57,7 +54,7 @@ public class TheatreController {
     }
 
     @PutMapping("/theatres/{id}")
-    public ResponseEntity updateTheatreDetails(@PathVariable(name = "id") int id , @RequestBody TheatreDTO theatreDTO) throws TheatreDetailsNotFoundException, MovieDetailsNotFoundException, CustomerDetailsNotFoundException {
+    public ResponseEntity updateTheatreDetails(@PathVariable(name = "id") int id , @RequestBody TheatreDTO theatreDTO) throws TheatreDetailsNotFoundException, MovieDetailsNotFoundException, CustomerDetailsNotFoundException, StatusDetailsNotFoundException, LanguageDetailsNotFoundException, BookingDetailsNotFoundException {
         Theatre newTheatre = dtoEntityConverter.convertToTheatreEntity(theatreDTO);
         Theatre updatedTheatre = theatreService.updateTheatreDetails(id, newTheatre);
         TheatreDTO updatedTheatreDTO = entityDTOConverter.convertToTheatreDTO(updatedTheatre);
@@ -73,12 +70,6 @@ public class TheatreController {
         }
         System.out.println("Number of theatres :" + theatres.size());
         return ResponseEntity.ok(theatreDTOList);
-    }
-
-    @DeleteMapping("/theatres/{id}")
-    public ResponseEntity<String> removeTheatreDetails(@PathVariable("id") int id) throws TheatreDetailsNotFoundException{
-        theatreService.deleteTheatre(id);
-        return new ResponseEntity<>("Theatre details successfully removed ",HttpStatus.OK);
     }
 
     @GetMapping("/theatres/{id}/bookings")
