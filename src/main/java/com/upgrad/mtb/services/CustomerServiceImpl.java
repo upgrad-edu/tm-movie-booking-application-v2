@@ -30,110 +30,13 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     UserTypeService userTypeService;
 
-   /* private Map<String, Customer> refreshTokenUserMap;
-
-    private List<String> tokenStore;
-
-    private Map<String, String> refreshTokenAccessTokenMap;
-
-    private Map<String, Customer> accessTokenUserMap;*/
 
     private static final Logger logger = LoggerFactory.getLogger(CustomerServiceImpl.class);
 
     @PostConstruct
     public void init() {
-        /*refreshTokenUserMap = new HashMap<>();
-        tokenStore = new ArrayList<>();
-        refreshTokenAccessTokenMap = new HashMap<>();
-        accessTokenUserMap = new HashMap<>();*/
     }
 
-   /* public void updateAccessTokenUserMap(String accessTokenPrev, String accessTokenNew, Customer customerUser) {
-        if (accessTokenUserMap.containsKey(accessTokenPrev)) {
-            Customer user = accessTokenUserMap.get(accessTokenPrev);
-            accessTokenUserMap.remove(accessTokenPrev);
-            accessTokenUserMap.put(accessTokenNew, user);
-        } else {
-            accessTokenUserMap.put(accessTokenNew, customerUser);
-        }
-    }
-
-    public Customer getUserFromAccessToken(String accessToken) {
-        return accessTokenUserMap.get(accessToken);
-    }
-
-    public void removeUserFromAccessTokenMap(String accessToken) {
-        if (accessTokenUserMap.containsKey(accessToken)) {
-            accessTokenUserMap.remove(accessToken);
-        }
-    }
-
-    public boolean isTokenPresent(String token) {
-        return tokenStore.contains(token);
-    }
-
-    public void removeTokenIfPresent(String token) {
-        if (tokenStore.contains(token)) {
-            tokenStore.remove(token);
-        }
-    }
-
-    public void updateRefreshTokenAccessTokenMap(String refreshToken, String accessToken) {
-        this.refreshTokenAccessTokenMap.put(refreshToken, accessToken);
-    }
-
-    public void removeRefreshTokenAccessTokenMap(String refreshToken) {
-        if (this.refreshTokenAccessTokenMap.containsKey(refreshToken)) {
-            this.refreshTokenAccessTokenMap.remove(refreshToken);
-        }
-    }
-
-    public String getCurrentAccessTokenFromRefreshToken(String refreshToken) {
-        return this.refreshTokenAccessTokenMap.get(refreshToken);
-    }
-
-    public void addToken(String token) {
-        tokenStore.add(token);
-    }
-
-    public void removeRefreshToken(String refreshToken) {
-        if (refreshTokenUserMap.containsKey(refreshToken)) {
-            refreshTokenUserMap.remove(refreshToken);
-        }
-    }
-
-    public Customer getUserfromRefreshToken(String refreshToken) {
-        return refreshTokenUserMap.get(refreshToken);
-    }
-
-    public String getRefreshTokenForUser(String username) {
-
-        Customer customerUser = null;
-        List<Customer> customers = getAllCustomerDetails();
-        for (Customer user : customers) {
-            if (user.getUsername().equals(username)) {
-                customerUser = user;
-                break;
-            }
-        }
-
-        if (customerUser == null) { //User is not present
-            return null;
-        }
-        for (Map.Entry<String, Customer> entry : refreshTokenUserMap.entrySet()) {
-            if (entry.getValue().equals(customerUser)) {
-                return entry.getKey();
-            }
-        }
-
-        return null;
-    }
-
-    public void addRefreshToken(String refreshToken, Customer customer) {
-        this.refreshTokenUserMap.put(refreshToken, customer);
-    }
-
-*/
     @Override
     public Customer acceptCustomerDetails(Customer customer) throws CustomerUserNameExistsException, UserTypeDetailsNotFoundException {
         logger.debug("Entered acceptCustomerDetails", customer);
