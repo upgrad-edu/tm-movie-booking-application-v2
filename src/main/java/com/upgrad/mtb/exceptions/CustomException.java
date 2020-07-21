@@ -22,6 +22,6 @@ public class CustomException extends Exception {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 
-    public CustomException(String refresh_token_not_valid, HttpStatus unprocessableEntity) {
+    public CustomException(String token_not_valid, HttpStatus unprocessableEntity) {
     }
 }

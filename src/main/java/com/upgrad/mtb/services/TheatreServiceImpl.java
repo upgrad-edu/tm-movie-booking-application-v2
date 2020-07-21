@@ -1,15 +1,12 @@
 package com.upgrad.mtb.services;
 
 import com.upgrad.mtb.daos.TheatreDAO;
-import com.upgrad.mtb.beans.Theatre;
-import com.upgrad.mtb.dto.TheatreDTO;
-import com.upgrad.mtb.exceptions.MovieDetailsNotFoundException;
+import com.upgrad.mtb.entity.Theatre;
 import com.upgrad.mtb.exceptions.TheatreDetailsNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 @Service(value = "theatreService")
 public class TheatreServiceImpl implements TheatreService {

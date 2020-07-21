@@ -1,8 +1,6 @@
 package com.upgrad.mtb.services;
 
-import com.upgrad.mtb.beans.Theatre;
-import com.upgrad.mtb.dto.TheatreDTO;
-import com.upgrad.mtb.exceptions.MovieDetailsNotFoundException;
+import com.upgrad.mtb.entity.Theatre;
 import com.upgrad.mtb.exceptions.TheatreDetailsNotFoundException;
 
 import java.util.List;

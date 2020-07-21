@@ -1,6 +1,6 @@
 package com.upgrad.mtb.services;
 
-import com.upgrad.mtb.beans.City;
+import com.upgrad.mtb.entity.City;
 import com.upgrad.mtb.exceptions.CityDetailsNotFoundException;
 
 import java.util.List;

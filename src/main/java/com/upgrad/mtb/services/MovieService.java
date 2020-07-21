@@ -1,7 +1,6 @@
 package com.upgrad.mtb.services;
 
-import com.upgrad.mtb.beans.Movie;
-import com.upgrad.mtb.dto.MovieDTO;
+import com.upgrad.mtb.entity.Movie;
 import com.upgrad.mtb.exceptions.*;
 
 import java.util.List;

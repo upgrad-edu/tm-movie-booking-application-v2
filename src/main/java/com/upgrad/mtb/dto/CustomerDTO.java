@@ -1,6 +1,5 @@
 package com.upgrad.mtb.dto;
 
-import com.upgrad.mtb.beans.Booking;
 import lombok.Data;
 
 import java.util.Date;
@@ -16,7 +15,6 @@ public class CustomerDTO {
     String password;
     int userTypeId;
     String jwtToken;
-    String refreshToken;
     List<String> phoneNumbers;
     List<Integer> bookingIds;
 }

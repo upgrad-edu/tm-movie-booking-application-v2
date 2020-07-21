@@ -1,6 +1,6 @@
 package com.upgrad.mtb.controllers;
 
-import com.upgrad.mtb.beans.Booking;
+import com.upgrad.mtb.entity.Booking;
 import com.upgrad.mtb.dto.BookingDTO;
 import com.upgrad.mtb.exceptions.*;
 import com.upgrad.mtb.services.BookingService;

@@ -1,19 +1,14 @@
 package com.upgrad.mtb.controllers;
 
 import com.upgrad.mtb.MovieTicketBookingApplication;
-import com.upgrad.mtb.beans.Language;
-import com.upgrad.mtb.beans.Movie;
-import com.upgrad.mtb.beans.Status;
-import com.upgrad.mtb.beans.Theatre;
+import com.upgrad.mtb.entity.Language;
+import com.upgrad.mtb.entity.Movie;
+import com.upgrad.mtb.entity.Status;
 import com.upgrad.mtb.dto.MovieDTO;
-import com.upgrad.mtb.exceptions.LanguageDetailsNotFoundException;
 import com.upgrad.mtb.exceptions.MovieDetailsNotFoundException;
-import com.upgrad.mtb.exceptions.StatusDetailsNotFoundException;
 import com.upgrad.mtb.services.MovieService;
-import com.upgrad.mtb.services.MovieServiceImpl;
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -22,11 +17,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 

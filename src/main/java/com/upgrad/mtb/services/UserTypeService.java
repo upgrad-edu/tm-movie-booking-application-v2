@@ -1,6 +1,6 @@
 package com.upgrad.mtb.services;
 
-import com.upgrad.mtb.beans.UserType;
+import com.upgrad.mtb.entity.UserType;
 import com.upgrad.mtb.exceptions.UserTypeDetailsNotFoundException;
 
 import java.util.List;

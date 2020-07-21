@@ -1,12 +1,7 @@
 package com.upgrad.mtb.services;
 
-import com.upgrad.mtb.beans.City;
-import com.upgrad.mtb.beans.Customer;
-import com.upgrad.mtb.beans.UserType;
-import com.upgrad.mtb.controllers.MovieController;
+import com.upgrad.mtb.entity.Customer;
 import com.upgrad.mtb.daos.CustomerDAO;
-import com.upgrad.mtb.daos.UserTypeDAO;
-import com.upgrad.mtb.dto.CustomerDTO;
 import com.upgrad.mtb.exceptions.CustomerDetailsNotFoundException;
 import com.upgrad.mtb.exceptions.CustomerUserNameExistsException;
 import com.upgrad.mtb.exceptions.UserTypeDetailsNotFoundException;

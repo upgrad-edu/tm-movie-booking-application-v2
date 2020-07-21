@@ -1,6 +1,6 @@
 package com.upgrad.mtb.daos;
 
-import com.upgrad.mtb.beans.Movie;
+import com.upgrad.mtb.entity.Movie;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

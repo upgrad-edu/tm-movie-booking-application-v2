@@ -1,6 +1,6 @@
 package com.upgrad.mtb.services;
 
-import com.upgrad.mtb.beans.Movie;
+import com.upgrad.mtb.entity.Movie;
 import com.upgrad.mtb.daos.MovieDAO;
 import com.upgrad.mtb.exceptions.MovieDetailsNotFoundException;
 import com.upgrad.mtb.utils.DTOEntityConverter;

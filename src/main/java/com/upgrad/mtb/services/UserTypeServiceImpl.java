@@ -1,9 +1,7 @@
 package com.upgrad.mtb.services;
 
-import com.upgrad.mtb.beans.Movie;
-import com.upgrad.mtb.beans.UserType;
+import com.upgrad.mtb.entity.UserType;
 import com.upgrad.mtb.daos.UserTypeDAO;
-import com.upgrad.mtb.exceptions.MovieDetailsNotFoundException;
 import com.upgrad.mtb.exceptions.UserTypeDetailsNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

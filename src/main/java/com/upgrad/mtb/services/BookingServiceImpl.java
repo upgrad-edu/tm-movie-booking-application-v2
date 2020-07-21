@@ -1,16 +1,15 @@
 package com.upgrad.mtb.services;
 
-import com.upgrad.mtb.beans.Movie;
-import com.upgrad.mtb.beans.Theatre;
+import com.upgrad.mtb.entity.Movie;
+import com.upgrad.mtb.entity.Theatre;
 import com.upgrad.mtb.daos.BookingDAO;
-import com.upgrad.mtb.beans.Booking;
+import com.upgrad.mtb.entity.Booking;
 import com.upgrad.mtb.dto.BookingDTO;
 import com.upgrad.mtb.exceptions.*;
 import com.upgrad.mtb.utils.DateDifference;
 import com.upgrad.mtb.validator.BookingValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;

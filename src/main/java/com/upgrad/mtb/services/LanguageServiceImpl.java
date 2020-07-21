@@ -1,12 +1,8 @@
 package com.upgrad.mtb.services;
 
-import com.upgrad.mtb.beans.Booking;
-import com.upgrad.mtb.beans.Language;
-import com.upgrad.mtb.beans.UserType;
+import com.upgrad.mtb.entity.Language;
 import com.upgrad.mtb.daos.LanguageDAO;
-import com.upgrad.mtb.exceptions.BookingDetailsNotFoundException;
 import com.upgrad.mtb.exceptions.LanguageDetailsNotFoundException;
-import com.upgrad.mtb.exceptions.UserTypeDetailsNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

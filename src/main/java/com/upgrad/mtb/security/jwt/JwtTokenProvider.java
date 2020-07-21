@@ -23,10 +23,7 @@ public class JwtTokenProvider {
   private String secretKey = "secret";
 
   @Value("${security.jwt.token.expire-length:600000}")
-  private long validityInMilliseconds = 600000;//10 minutes
-
-  @Value("${security.jwt.token.expire-length:3600000}")
-  private long refreshValidityInMilliseconds = 3600000; //60 minutes
+  private long validityInMilliseconds = 3600000;//60 minutes
 
   @Autowired
   CustomerServiceImpl customerService;
@@ -42,21 +39,6 @@ public class JwtTokenProvider {
 
     Date now = new Date();
     Date validity = new Date(now.getTime() + validityInMilliseconds);
-
-    return Jwts.builder()
-        .setClaims(claims)
-        .setIssuedAt(now)
-        .setExpiration(validity)
-        .signWith(SignatureAlgorithm.HS256, secretKey)
-        .compact();
-  }
-
-  public String createRefreshToken(String emailId) {
-
-    Claims claims = Jwts.claims().setSubject(emailId);
-
-    Date now = new Date();
-    Date validity = new Date(now.getTime() + refreshValidityInMilliseconds);
 
     return Jwts.builder()
         .setClaims(claims)
@@ -85,9 +67,6 @@ public class JwtTokenProvider {
   }
 
   public boolean validateToken(String token) {
-    /*if (!customerService.isTokenPresent(token)) {
-      throw new InvalidJwtAuthenticationException("Expired or invalid JWT token");
-    }*/
     try {
       Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
 

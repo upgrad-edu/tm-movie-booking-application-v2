@@ -1,6 +1,5 @@
 package com.upgrad.mtb.validator;
 
-import com.upgrad.mtb.beans.Movie;
 import com.upgrad.mtb.dto.MovieDTO;
 import com.upgrad.mtb.exceptions.APIException;
 import com.upgrad.mtb.exceptions.StatusDetailsNotFoundException;

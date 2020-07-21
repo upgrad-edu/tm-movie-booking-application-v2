@@ -1,9 +1,9 @@
 package com.upgrad.mtb.utils;
 
-import com.upgrad.mtb.beans.Booking;
-import com.upgrad.mtb.beans.Customer;
-import com.upgrad.mtb.beans.Movie;
-import com.upgrad.mtb.beans.Theatre;
+import com.upgrad.mtb.entity.Booking;
+import com.upgrad.mtb.entity.Customer;
+import com.upgrad.mtb.entity.Movie;
+import com.upgrad.mtb.entity.Theatre;
 import com.upgrad.mtb.dto.BookingDTO;
 import com.upgrad.mtb.dto.CustomerDTO;
 import com.upgrad.mtb.dto.MovieDTO;

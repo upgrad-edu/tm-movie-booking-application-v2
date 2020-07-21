@@ -1,7 +1,7 @@
 package com.upgrad.mtb.controllers;
 
-import com.upgrad.mtb.beans.Booking;
-import com.upgrad.mtb.beans.Customer;
+import com.upgrad.mtb.entity.Booking;
+import com.upgrad.mtb.entity.Customer;
 import com.upgrad.mtb.dto.BookingDTO;
 import com.upgrad.mtb.dto.CustomerDTO;
 import com.upgrad.mtb.exceptions.BookingDetailsNotFoundException;

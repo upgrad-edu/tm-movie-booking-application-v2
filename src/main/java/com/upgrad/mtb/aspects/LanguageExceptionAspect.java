@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-public class LanguageExceptions {
+public class LanguageExceptionAspect {
     @ExceptionHandler(LanguageDetailsNotFoundException.class)
     public ResponseEntity<CustomResponse> handleLanguageDetailsNotFoundException(Exception e){
-        CustomResponse response = new CustomResponse(e.getMessage(), HttpStatus.EXPECTATION_FAILED.value());
-        return  new ResponseEntity<>(response, HttpStatus.EXPECTATION_FAILED);
+        CustomResponse response = new CustomResponse(e.getMessage(), HttpStatus.NOT_FOUND.value());
+        return  new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 }

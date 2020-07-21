@@ -1,10 +1,8 @@
 package com.upgrad.mtb.controllers;
 
-import com.upgrad.mtb.beans.Booking;
-import com.upgrad.mtb.beans.Customer;
-import com.upgrad.mtb.beans.Theatre;
+import com.upgrad.mtb.entity.Booking;
+import com.upgrad.mtb.entity.Theatre;
 import com.upgrad.mtb.dto.BookingDTO;
-import com.upgrad.mtb.dto.CustomerDTO;
 import com.upgrad.mtb.dto.TheatreDTO;
 import com.upgrad.mtb.exceptions.*;
 import com.upgrad.mtb.services.TheatreService;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Controller
 public class TheatreController {

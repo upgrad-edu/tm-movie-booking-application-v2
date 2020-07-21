@@ -1,6 +1,6 @@
 package com.upgrad.mtb.services;
 
-import com.upgrad.mtb.beans.Language;
+import com.upgrad.mtb.entity.Language;
 import com.upgrad.mtb.exceptions.LanguageDetailsNotFoundException;
 
 import java.util.List;

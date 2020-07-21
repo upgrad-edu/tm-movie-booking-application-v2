@@ -1,11 +1,7 @@
 package com.upgrad.mtb.services;
 
-import com.upgrad.mtb.beans.Language;
-import com.upgrad.mtb.beans.Movie;
-import com.upgrad.mtb.beans.Status;
+import com.upgrad.mtb.entity.Status;
 import com.upgrad.mtb.daos.StatusDAO;
-import com.upgrad.mtb.exceptions.LanguageDetailsNotFoundException;
-import com.upgrad.mtb.exceptions.MovieDetailsNotFoundException;
 import com.upgrad.mtb.exceptions.StatusDetailsNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

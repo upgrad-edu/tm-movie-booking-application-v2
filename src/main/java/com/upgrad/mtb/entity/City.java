@@ -1,4 +1,4 @@
-package com.upgrad.mtb.beans;
+package com.upgrad.mtb.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;

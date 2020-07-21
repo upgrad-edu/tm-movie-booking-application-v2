@@ -1,6 +1,6 @@
 package com.upgrad.mtb.services;
 
-import com.upgrad.mtb.beans.Status;
+import com.upgrad.mtb.entity.Status;
 import com.upgrad.mtb.exceptions.StatusDetailsNotFoundException;
 
 import java.util.List;
