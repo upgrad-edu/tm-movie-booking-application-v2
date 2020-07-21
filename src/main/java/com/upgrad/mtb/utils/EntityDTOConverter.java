@@ -64,7 +64,6 @@ public class EntityDTOConverter {
             }
             theatreDTO.setMovieIds(movieIds);
         }
-        theatreDTO.setNoOfSeats(theatre.getNoOfSeats());
         theatreDTO.setTheatreName(theatre.getTheatreName());
         theatreDTO.setTicketPrice(theatre.getTicketPrice());
         if(theatre.getBookings() != null) {

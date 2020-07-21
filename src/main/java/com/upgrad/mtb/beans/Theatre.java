@@ -29,8 +29,6 @@ public class Theatre {
     @Column( nullable = false, unique = true)
     private String theatreName;
     @Column( nullable = false)
-    private int noOfSeats;
-    @Column( nullable = false)
     private int ticketPrice;
 
     @ManyToOne
@@ -48,9 +46,8 @@ public class Theatre {
 
     public Theatre(){}
 
-    public Theatre(String theatreName, int noOfSeats, int ticketPrice, City city, List<Booking> bookings, List<Movie> movies) {
+    public Theatre(String theatreName, int ticketPrice, City city, List<Booking> bookings, List<Movie> movies) {
         this.theatreName = theatreName;
-        this.noOfSeats = noOfSeats;
         this.ticketPrice = ticketPrice;
         this.city = city;
         this.bookings = bookings;

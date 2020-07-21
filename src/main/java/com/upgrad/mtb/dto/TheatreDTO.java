@@ -10,7 +10,6 @@ import java.util.Set;
 public class TheatreDTO {
     int theatreId;
     String theatreName;
-    int noOfSeats;
     int ticketPrice;
     int cityId;
     List<Integer> movieIds;

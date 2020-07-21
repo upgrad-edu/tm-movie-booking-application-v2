@@ -59,7 +59,6 @@ public class DTOEntityConverter {
     public Theatre convertToTheatreEntity(TheatreDTO theatreDTO) throws TheatreDetailsNotFoundException, CustomerDetailsNotFoundException, MovieDetailsNotFoundException, LanguageDetailsNotFoundException, StatusDetailsNotFoundException, BookingDetailsNotFoundException {
         Theatre theatre = new Theatre();
         theatre.setTicketPrice(theatreDTO.getTicketPrice());
-        theatre.setNoOfSeats(theatreDTO.getNoOfSeats());
         theatre.setTheatreName(theatreDTO.getTheatreName());
         theatre.setCity(cityService.getCityDetails(theatreDTO.getCityId()));
         List<Movie> movieList = new ArrayList<>();
