@@ -4,6 +4,8 @@ import com.upgrad.mtb.entity.Booking;
 import com.upgrad.mtb.dto.BookingDTO;
 import com.upgrad.mtb.exceptions.*;
 import com.upgrad.mtb.services.BookingService;
+import com.upgrad.mtb.utils.DTOEntityConverter;
+import com.upgrad.mtb.utils.EntityDTOConverter;
 import com.upgrad.mtb.validator.BookingValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +23,10 @@ public class BookingController {
     BookingService bookingService;
     @Autowired
     BookingValidator bookingValidator;
+    @Autowired
+    EntityDTOConverter entityDTOConverter;
+    @Autowired
+    DTOEntityConverter dtoEntityConverter;
 
     @RequestMapping(value= {"/sayHelloBooking"},method= RequestMethod.GET)
     public ResponseEntity<String> sayHello(){
@@ -34,8 +40,10 @@ public class BookingController {
         ResponseEntity responseEntity = null;
         try {
             bookingValidator.validateBooking(bookingDTO);
-            Booking responseBooking = bookingService.acceptBookingDetails(bookingDTO);
-            responseEntity = ResponseEntity.ok(responseBooking);
+            Booking newBooking = dtoEntityConverter.convertToBookingEntity(bookingDTO);
+            Booking savedBooking = bookingService.acceptBookingDetails(newBooking);
+            BookingDTO savedBookingDTO = entityDTOConverter.convertToBookingDTO(savedBooking);
+            responseEntity = ResponseEntity.ok(savedBookingDTO);
         } catch (ParseException e) {
             e.printStackTrace();
         }

@@ -29,17 +29,12 @@ public class BookingServiceImpl implements BookingService  {
     @Autowired
     BookingValidator bookingValidator;
 
-    public Booking acceptBookingDetails(BookingDTO bookingDTO) throws TheatreDetailsNotFoundException, CustomerDetailsNotFoundException, BookingFailedException, APIException, ParseException {
-        Theatre theatre = theatreService.getTheatreDetails(bookingDTO.getTheatreId());
+    public Booking acceptBookingDetails(Booking booking) throws TheatreDetailsNotFoundException, CustomerDetailsNotFoundException, BookingFailedException, APIException, ParseException {
+        Theatre theatre = booking.getTheatre();
         List<Movie> moviesList = theatre.getMovies();
         if(moviesList.get(moviesList.size()-1).getStatus().getStatus().equalsIgnoreCase("Released")){
-            Booking newBooking = new Booking();
-            newBooking.setNoOfSeats(bookingDTO.getNoOfSeats());
-            newBooking.setBookingDate(bookingDTO.getBookingDate());
-            newBooking.setTheatre(theatreService.getTheatreDetails(bookingDTO.getTheatreId()));
-            newBooking.setCustomer(customerService.getCustomerDetails(bookingDTO.getCustomerId()));
-            theatreService.updateTheatreDetails(bookingDTO.getTheatreId(), theatre );
-            return bookingDAO.save(newBooking);
+            theatreService.updateTheatreDetails(theatre.getId(), theatre );
+            return bookingDAO.save(booking);
         }else{
             throw new BookingFailedException("Booking Failed");
         }
