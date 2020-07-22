@@ -30,14 +30,6 @@ public class BookingServiceImpl implements BookingService  {
     BookingValidator bookingValidator;
 
     public Booking acceptBookingDetails(BookingDTO bookingDTO) throws TheatreDetailsNotFoundException, CustomerDetailsNotFoundException, BookingFailedException, APIException, ParseException {
-        System.out.println("New booking");
-        bookingValidator.validateBooking(bookingDTO);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String dateString = sdf.format(new Date());
-        Date todaysDate = sdf.parse(dateString);
-        String formatBookingDate = sdf.format(bookingDTO.getBookingDate());
-        Date parsedBookingDate = sdf.parse(formatBookingDate);
-        int bookingSlot = DateDifference.differenceBetweenDates(todaysDate,parsedBookingDate);
         Theatre theatre = theatreService.getTheatreDetails(bookingDTO.getTheatreId());
         List<Movie> moviesList = theatre.getMovies();
         if(moviesList.get(moviesList.size()-1).getStatus().getStatus().equalsIgnoreCase("Released")){

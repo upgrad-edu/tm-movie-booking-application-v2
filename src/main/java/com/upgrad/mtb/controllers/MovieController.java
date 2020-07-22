@@ -54,7 +54,7 @@ public class MovieController {
         ResponseEntity responseEntity = null;
         String username = jwtTokenProvider.getUsername(accessToken);
         if(username == null)
-            throw new APIException("Please add authentication");
+            throw new APIException("Please add proper authentication");
         if(!customerService.getCustomerDetailsByUsername(username).getUserType().getUserType().equalsIgnoreCase("Admin"))
             throw new BadCredentialsException("This feature is only available to admin");
         try {

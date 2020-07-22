@@ -5,6 +5,8 @@ import com.upgrad.mtb.entity.Theatre;
 import com.upgrad.mtb.dto.BookingDTO;
 import com.upgrad.mtb.dto.TheatreDTO;
 import com.upgrad.mtb.exceptions.*;
+import com.upgrad.mtb.security.jwt.JwtTokenProvider;
+import com.upgrad.mtb.services.CustomerService;
 import com.upgrad.mtb.services.TheatreService;
 import com.upgrad.mtb.utils.DTOEntityConverter;
 import com.upgrad.mtb.utils.EntityDTOConverter;
@@ -26,6 +28,10 @@ public class TheatreController {
     DTOEntityConverter dtoEntityConverter;
     @Autowired
     EntityDTOConverter entityDTOConverter;
+    @Autowired
+    JwtTokenProvider jwtTokenProvider;
+    @Autowired
+    CustomerService customerService;
 
 
     @RequestMapping(value= {"/sayHelloTheatre"},method= RequestMethod.GET)
@@ -35,7 +41,12 @@ public class TheatreController {
 
 
     @PostMapping(value="/theatres",consumes= MediaType.APPLICATION_JSON_VALUE,headers="Accept=application/json")
-    public ResponseEntity newTheatre(@RequestBody TheatreDTO theatreDTO) throws MovieDetailsNotFoundException, TheatreDetailsNotFoundException, CustomerDetailsNotFoundException, StatusDetailsNotFoundException, LanguageDetailsNotFoundException, BookingDetailsNotFoundException {
+    public ResponseEntity newTheatre(@RequestBody TheatreDTO theatreDTO , @RequestHeader(value = "X-ACCESS-TOKEN") String accessToken) throws MovieDetailsNotFoundException, TheatreDetailsNotFoundException, CustomerDetailsNotFoundException, StatusDetailsNotFoundException, LanguageDetailsNotFoundException, BookingDetailsNotFoundException, APIException, BadCredentialsException {
+        String username = jwtTokenProvider.getUsername(accessToken);
+        if(username == null)
+            throw new APIException("Please add proper authentication");
+        if(!customerService.getCustomerDetailsByUsername(username).getUserType().getUserType().equalsIgnoreCase("Admin"))
+            throw new BadCredentialsException("This feature is only available to admin");
         Theatre newTheatre = dtoEntityConverter.convertToTheatreEntity(theatreDTO);
         Theatre savedTheatre = theatreService.acceptTheatreDetails(newTheatre);
         TheatreDTO savedTheatreDTO = entityDTOConverter.convertToTheatreDTO(savedTheatre);
