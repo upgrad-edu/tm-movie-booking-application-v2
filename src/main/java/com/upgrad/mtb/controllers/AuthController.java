@@ -1,6 +1,7 @@
 package com.upgrad.mtb.controllers;
 
 
+import com.upgrad.mtb.dto.ForgotPasswordDTO;
 import com.upgrad.mtb.entity.Customer;
 import com.upgrad.mtb.dto.CustomerDTO;
 import com.upgrad.mtb.dto.LoginDTO;
@@ -121,6 +122,32 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.CREATED).body(savedCustomerDTO);
         } catch (Exception e) {
             throw new CustomException("Username :" + resetPasswordDTO.getUsername() + "Invalid UserName/Password", HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/forgotPassword")
+    @ResponseBody
+    public ResponseEntity forgotPassword(@RequestBody ForgotPasswordDTO forgotPasswordDTO) throws CustomException {
+        try {
+            Map<String, String> model = new HashMap<>();
+            String username = forgotPasswordDTO.getUsername();
+            String phoneNumber = forgotPasswordDTO.getPhoneNumber();
+            if(StringUtils.isEmpty(username) ||  StringUtils.isEmpty(phoneNumber)){
+                model.put("Error", "Invalid Data");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(model);
+            }
+            Customer savedCustomer = customerService.getCustomerDetailsByUsername(username);
+            if(phoneNumber!= null && !savedCustomer.getPhoneNumbers().contains(phoneNumber)){
+                throw new BadCredentialsException("Invalid username/phoneNumber");
+            }
+            String token = jwtTokenProvider.createToken(username);
+            savedCustomer.setPassword(forgotPasswordDTO.getNewPassword());
+            savedCustomer = customerService.updateCustomerDetails(savedCustomer.getId(),savedCustomer);
+            CustomerDTO savedCustomerDTO = entityDTOConverter.convertToCustomerDTO(savedCustomer);
+            savedCustomerDTO.setJwtToken(token);
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedCustomerDTO);
+        } catch (Exception e) {
+            throw new CustomException("Username :" + forgotPasswordDTO.getUsername() + "Invalid UserName/PhoneNumber", HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
 }

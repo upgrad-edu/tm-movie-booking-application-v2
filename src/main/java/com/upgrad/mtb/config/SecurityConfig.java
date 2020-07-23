@@ -48,6 +48,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .permitAll()
         .antMatchers("/movies/**")
         .permitAll()
+        .antMatchers("/forgotPassword")
+        .permitAll()
         .anyRequest()
         .authenticated()
         .and()
