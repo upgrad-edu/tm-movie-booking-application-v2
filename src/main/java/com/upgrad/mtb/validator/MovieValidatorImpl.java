@@ -36,10 +36,13 @@ public class MovieValidatorImpl implements MovieValidator {
             throw new APIException("Invalid language");
         if(movieDTO.getStatusId() <= 0)
             throw new APIException("Invalid status");
-        if(statusService.getStatusDetails(movieDTO.getStatusId()).getStatus().equalsIgnoreCase("Released")){
+        if(statusService.getStatusDetails(movieDTO.getStatusId()).getStatus().equalsIgnoreCase("Upcoming")){
             if(parsedMovieDate.compareTo(todaysDate) <0 ){
                 throw new APIException("Invalid movie release date");
             }
+        }
+        if(statusService.getStatusDetails(movieDTO.getStatusId()).getStatus().equalsIgnoreCase("Blocked")){
+                throw new APIException("Invalid movie status");
         }
     }
 }

@@ -48,7 +48,6 @@ public class MovieController {
         return new ResponseEntity<String>("Hello World To All From MovieController", HttpStatus.OK);
     }
 
-    //MOVIE CONTROLLER - basic CRUD APIs
     @PostMapping(value="/movies",consumes= MediaType.APPLICATION_JSON_VALUE,headers="Accept=application/json")
     public ResponseEntity newMovie(@RequestBody MovieDTO movieDTO , @RequestHeader(value = "X-ACCESS-TOKEN") String accessToken) throws APIException, StatusDetailsNotFoundException, LanguageDetailsNotFoundException, TheatreDetailsNotFoundException, CustomerDetailsNotFoundException, MovieDetailsNotFoundException, BadCredentialsException {
         ResponseEntity responseEntity = null;
