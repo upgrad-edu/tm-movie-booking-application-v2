@@ -11,9 +11,10 @@ import java.util.Date;
 public class BookingDTO {
     int bookingId;
     @Temporal(TemporalType.TIMESTAMP)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     Date bookingDate;
     int noOfSeats;
     int customerId;
     int theatreId;
+    int movieId;
 }
