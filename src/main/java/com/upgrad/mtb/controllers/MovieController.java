@@ -35,8 +35,12 @@ public class MovieController {
     DTOEntityConverter dtoEntityConverter;
     @Autowired
     EntityDTOConverter entityDTOConverter;
+    /**
+     * TODO this will be used in the security session
     @Autowired
     JwtTokenProvider jwtTokenProvider;
+    **/
+
     @Autowired
     CustomerService customerService;
 
@@ -47,15 +51,19 @@ public class MovieController {
         logger.debug("Hello from movie controller");
         return new ResponseEntity<String>("Hello World To All From MovieController", HttpStatus.OK);
     }
-
+    /**
+     * TODO : This method will be changed after the security session
+     * */
     @PostMapping(value="/movies",consumes= MediaType.APPLICATION_JSON_VALUE,headers="Accept=application/json")
-    public ResponseEntity newMovie(@RequestBody MovieDTO movieDTO , @RequestHeader(value = "X-ACCESS-TOKEN") String accessToken) throws APIException, StatusDetailsNotFoundException, LanguageDetailsNotFoundException, TheatreDetailsNotFoundException, CustomerDetailsNotFoundException, MovieDetailsNotFoundException, BadCredentialsException {
+    public ResponseEntity newMovie(@RequestBody MovieDTO movieDTO ) throws APIException, StatusDetailsNotFoundException, LanguageDetailsNotFoundException, TheatreDetailsNotFoundException, CustomerDetailsNotFoundException, MovieDetailsNotFoundException, BadCredentialsException {
         ResponseEntity responseEntity = null;
-        String username = jwtTokenProvider.getUsername(accessToken);
+        /**
+         * TODO : after spring security
+         * String username = jwtTokenProvider.getUsername(accessToken);
         if(username == null)
             throw new APIException("Please add proper authentication");
         if(!customerService.getCustomerDetailsByUsername(username).getUserType().getUserType().equalsIgnoreCase("Admin"))
-            throw new BadCredentialsException("This feature is only available to admin");
+            throw new BadCredentialsException("This feature is only available to admin");**/
         try {
             movieValidator.validateMovie(movieDTO);
             Movie newMovie = dtoEntityConverter.convertToMovieEntity(movieDTO);
@@ -70,6 +78,7 @@ public class MovieController {
         return responseEntity;
     }
 
+
     @GetMapping("/movies/{id}")
     public ResponseEntity getMovieDetails(@PathVariable(name = "id") int id) throws MovieDetailsNotFoundException, APIException {
         Movie responseMovie = movieService.getMovieDetails(id);
@@ -81,12 +90,15 @@ public class MovieController {
     @PutMapping(value="/movies/{id}",consumes= MediaType.APPLICATION_JSON_VALUE,headers="Accept=application/json")
     public ResponseEntity updateMovieDetails(@PathVariable(name = "id") int id, @RequestBody MovieDTO movieDTO,  @RequestHeader(value = "X-ACCESS-TOKEN") String accessToken) throws MovieDetailsNotFoundException, StatusDetailsNotFoundException, LanguageDetailsNotFoundException, APIException, ParseException, TheatreDetailsNotFoundException, CustomerDetailsNotFoundException, BadCredentialsException {
         logger.debug("update movie details : movie id :" + id, movieDTO);
+        /**
+         * TODO : after spring security
         String username = jwtTokenProvider.getUsername(accessToken);
         if(username == null)
             throw new APIException("Please add authentication");
         if(!customerService.getCustomerDetailsByUsername(username).getUserType().getUserType().equalsIgnoreCase("Admin"))
             throw new BadCredentialsException("This feature is only available to admin");
-        movieValidator.validateMovie(movieDTO);
+        **/
+         movieValidator.validateMovie(movieDTO);
         Movie newMovie = dtoEntityConverter.convertToMovieEntity(movieDTO);
         Movie updatedMovie = movieService.updateMovieDetails(id, newMovie);
         MovieDTO updatedMovieDTO = entityDTOConverter.convertToMovieDTO(updatedMovie);

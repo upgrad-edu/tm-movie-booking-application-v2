@@ -9,8 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -35,7 +33,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer acceptCustomerDetails(Customer customer) throws CustomerUserNameExistsException, UserTypeDetailsNotFoundException {
         logger.debug("Entered acceptCustomerDetails", customer);
-        if(customerDAO.findByUsername(customer.getUsername()).isEmpty()){
+        if(!customerDAO.findByUsername(customer.getUsername()).isPresent()){
            return customerDAO.save(customer);
         }else{
             throw new CustomerUserNameExistsException("This username already exists please choose another : " + customer.getUsername());
@@ -50,7 +48,8 @@ public class CustomerServiceImpl implements CustomerService {
                 ()->  new CustomerDetailsNotFoundException("Customer not found for id" + id));
         return customer;
     }
-
+    /**
+     * TODO - In spring security class
     @Override
     public UserDetails loadCustomerDetails(String username) throws CustomerDetailsNotFoundException {
         Customer customer = customerDAO.findByUsername(username).orElseThrow(
@@ -59,7 +58,7 @@ public class CustomerServiceImpl implements CustomerService {
         return  new User(customer.getUsername(), customer.getPassword() , new ArrayList<>());
 
     }
-
+    **/
     public Customer getCustomerDetailsByUsername(String username) throws CustomerDetailsNotFoundException {
         Customer customer = customerDAO.findByUsername(username).orElseThrow(
                 ()->  new CustomerDetailsNotFoundException("Customer not found for username" + username));

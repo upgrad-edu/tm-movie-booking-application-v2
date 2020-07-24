@@ -1,11 +1,10 @@
 package com.upgrad.mtb.security.jwt;
 
-import org.springframework.security.core.AuthenticationException;
 
+/**
+ * TODO This part will be explained in the security class
+ */
+public class InvalidJwtAuthenticationException  {
 
-public class InvalidJwtAuthenticationException extends AuthenticationException {
-  public InvalidJwtAuthenticationException(String e) {
-    super(e);
-  }
 }
 

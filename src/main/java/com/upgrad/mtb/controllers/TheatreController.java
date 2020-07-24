@@ -28,8 +28,11 @@ public class TheatreController {
     DTOEntityConverter dtoEntityConverter;
     @Autowired
     EntityDTOConverter entityDTOConverter;
-    @Autowired
-    JwtTokenProvider jwtTokenProvider;
+    /**
+     * TODO this will be used in the security session
+     @Autowired
+     JwtTokenProvider jwtTokenProvider;
+     **/
     @Autowired
     CustomerService customerService;
 
@@ -42,12 +45,15 @@ public class TheatreController {
 
     @PostMapping(value="/theatres",consumes= MediaType.APPLICATION_JSON_VALUE,headers="Accept=application/json")
     public ResponseEntity newTheatre(@RequestBody TheatreDTO theatreDTO , @RequestHeader(value = "X-ACCESS-TOKEN") String accessToken) throws MovieDetailsNotFoundException, TheatreDetailsNotFoundException, CustomerDetailsNotFoundException, StatusDetailsNotFoundException, LanguageDetailsNotFoundException, BookingDetailsNotFoundException, APIException, BadCredentialsException {
+        /**
+         * TODO this will be used in the security session
         String username = jwtTokenProvider.getUsername(accessToken);
         if(username == null)
             throw new APIException("Please add proper authentication");
         if(!customerService.getCustomerDetailsByUsername(username).getUserType().getUserType().equalsIgnoreCase("Admin"))
             throw new BadCredentialsException("This feature is only available to admin");
-        Theatre newTheatre = dtoEntityConverter.convertToTheatreEntity(theatreDTO);
+        **/
+         Theatre newTheatre = dtoEntityConverter.convertToTheatreEntity(theatreDTO);
         Theatre savedTheatre = theatreService.acceptTheatreDetails(newTheatre);
         TheatreDTO savedTheatreDTO = entityDTOConverter.convertToTheatreDTO(savedTheatre);
         return ResponseEntity.ok(savedTheatreDTO);

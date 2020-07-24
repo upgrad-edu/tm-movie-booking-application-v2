@@ -8,7 +8,6 @@ import com.upgrad.mtb.exceptions.BookingDetailsNotFoundException;
 import com.upgrad.mtb.exceptions.CustomerDetailsNotFoundException;
 import com.upgrad.mtb.exceptions.TheatreDetailsNotFoundException;
 import com.upgrad.mtb.exceptions.UserTypeDetailsNotFoundException;
-import com.upgrad.mtb.security.jwt.JwtTokenProvider;
 import com.upgrad.mtb.services.BookingService;
 import com.upgrad.mtb.services.CustomerServiceImpl;
 import com.upgrad.mtb.utils.DTOEntityConverter;
@@ -31,13 +30,12 @@ public class CustomersController {
     BookingService bookingService;
     @Autowired
     CustomerValidator customerValidator;
-    @Autowired
-    JwtTokenProvider jwtTokenProvider;
+
     @Autowired
     EntityDTOConverter entityDTOConverter;
     @Autowired
     DTOEntityConverter dtoEntityConverter;
-    
+
     @RequestMapping(value= {"/sayHelloCustomer"},method= RequestMethod.GET)
     public ResponseEntity<String> sayHello(){
         return new ResponseEntity<String>("Hello World To All From CustomerController", HttpStatus.OK);

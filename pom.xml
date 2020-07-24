@@ -15,7 +15,7 @@
 	<description>Movie Ticket Booking Application</description>
 
 	<properties>
-		<java.version>11</java.version>
+		<java.version>8</java.version>
 	</properties>
 
 	<dependencies>
@@ -38,13 +38,13 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<!-- change this as per your system -->
 		<dependency>
 			<groupId>com.oracle</groupId>
-			<artifactId>ojdbc6</artifactId>
-			<version>1.0</version>
+			<artifactId>ojdbc8</artifactId>
+			<version>8</version>
 			<scope>system</scope>
-			<!-- PLEASE CHANGE THE LOCATION BELOW AS PER YOUR SYSTEM CONFIG -->
-			<systemPath>C:/oraclexe/app/oracle/product/11.2.0/server/jdbc/lib/ojdbc6.jar</systemPath>
+			<systemPath>/Users/vimohan/Downloads/ojdbc8.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -104,6 +104,7 @@
 			<version>3.1.0</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- This will be needed in the spring security
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
@@ -126,6 +127,7 @@
 			<artifactId>jjwt</artifactId>
 			<version>0.9.1</version>
 		</dependency>
+		-->
 	</dependencies>
 
 	<build>
