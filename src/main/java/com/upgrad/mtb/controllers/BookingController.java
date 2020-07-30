@@ -2,8 +2,10 @@ package com.upgrad.mtb.controllers;
 
 import com.upgrad.mtb.entity.Booking;
 import com.upgrad.mtb.dto.BookingDTO;
+import com.upgrad.mtb.entity.Movie;
 import com.upgrad.mtb.exceptions.*;
 import com.upgrad.mtb.services.BookingService;
+import com.upgrad.mtb.services.MovieService;
 import com.upgrad.mtb.utils.DTOEntityConverter;
 import com.upgrad.mtb.utils.EntityDTOConverter;
 import com.upgrad.mtb.validator.BookingValidator;
@@ -27,6 +29,8 @@ public class BookingController {
     EntityDTOConverter entityDTOConverter;
     @Autowired
     DTOEntityConverter dtoEntityConverter;
+    @Autowired
+    MovieService movieService;
 
     @RequestMapping(value= {"/sayHelloBooking"},method= RequestMethod.GET)
     public ResponseEntity<String> sayHello(){
@@ -35,14 +39,22 @@ public class BookingController {
 
     //BOOKING CONTROLLER
     @PostMapping(value="/bookings",consumes= MediaType.APPLICATION_JSON_VALUE,headers="Accept=application/json")
-    public ResponseEntity newBooking(@RequestBody BookingDTO bookingDTO) throws APIException , TheatreDetailsNotFoundException, CustomerDetailsNotFoundException, BookingFailedException {
+    public ResponseEntity newBooking(@RequestBody BookingDTO bookingDTO) throws APIException, TheatreDetailsNotFoundException, CustomerDetailsNotFoundException, BookingFailedException, MovieDetailsNotFoundException {
         System.out.println("New booking");
         ResponseEntity responseEntity = null;
         try {
             bookingValidator.validateBooking(bookingDTO);
+            Movie bookedMovie = movieService.getMovieDetails(bookingDTO.getMovieId());
+            if(bookedMovie == null){
+                throw new BookingFailedException("Movie details not found");
+            }else{
+                if(!bookedMovie.getStatus().getStatus().equalsIgnoreCase("Released"))
+                    throw new BookingFailedException("Movie is not released");
+            }
             Booking newBooking = dtoEntityConverter.convertToBookingEntity(bookingDTO);
             Booking savedBooking = bookingService.acceptBookingDetails(newBooking);
             BookingDTO savedBookingDTO = entityDTOConverter.convertToBookingDTO(savedBooking);
+            savedBookingDTO.setMovieId(bookingDTO.getMovieId());
             responseEntity = ResponseEntity.ok(savedBookingDTO);
         } catch (ParseException e) {
             e.printStackTrace();

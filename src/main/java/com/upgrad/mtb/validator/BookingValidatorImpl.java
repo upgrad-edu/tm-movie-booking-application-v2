@@ -27,5 +27,8 @@ public class BookingValidatorImpl implements BookingValidator {
         int dateDifferece = DateDifference.differenceBetweenDates(todaysDate,parsedBookingDate);
         if(dateDifferece < 0 || dateDifferece >= 3)
             throw new APIException("Invalid booking data");
+        if(bookingDTO.getMovieId() <= 0 )
+            throw new APIException("Invalid movie id");
+
     }
 }
