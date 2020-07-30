@@ -7,11 +7,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-@ControllerAdvice
+
+/**
+ * TODO : This class will be covered in the exception handling class
+ */
 public class MovieExceptionAspect {
-    @ExceptionHandler(MovieDetailsNotFoundException.class)
-    public ResponseEntity<CustomResponse> handleMovieDetailsNotFoundException(Exception e){
-        CustomResponse response = new CustomResponse(e.getMessage(), HttpStatus.NOT_FOUND.value());
-        return  new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-    }
+
 }
