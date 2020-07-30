@@ -23,11 +23,9 @@ public class MovieServiceImpl implements MovieService {
     @Autowired
     DTOEntityConverter dtoEntityConverter;
 
-    private static final Logger logger = LoggerFactory.getLogger(MovieServiceImpl.class);
 
     @Override
     public Movie acceptMovieDetails(Movie movie) {
-        logger.debug("Enter accept movie details: SAVE" ,movie);
         return movieDAO.save(movie);
     }
 

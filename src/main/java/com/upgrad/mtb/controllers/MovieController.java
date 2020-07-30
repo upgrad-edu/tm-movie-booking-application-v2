@@ -44,11 +44,9 @@ public class MovieController {
     @Autowired
     CustomerService customerService;
 
-    private static final Logger logger = LoggerFactory.getLogger(MovieController.class);
 
     @RequestMapping(value= {"/sayHelloMovie"},method= RequestMethod.GET)
     public ResponseEntity<String> sayHello(){
-        logger.debug("Hello from movie controller");
         return new ResponseEntity<String>("Hello World To All From MovieController", HttpStatus.OK);
     }
     /**
@@ -70,10 +68,8 @@ public class MovieController {
             Movie savedMovie = movieService.acceptMovieDetails(newMovie);
             MovieDTO savedMovieDTO = entityDTOConverter.convertToMovieDTO(savedMovie);
             responseEntity = ResponseEntity.ok(savedMovieDTO);
-            logger.debug("Accept new movie details",responseEntity);
         } catch (ParseException e) {
             e.printStackTrace();
-            logger.error("Exception:" , e);
         }
         return responseEntity;
     }
@@ -83,13 +79,11 @@ public class MovieController {
     public ResponseEntity getMovieDetails(@PathVariable(name = "id") int id) throws MovieDetailsNotFoundException, APIException {
         Movie responseMovie = movieService.getMovieDetails(id);
         MovieDTO responseMovieDTO = entityDTOConverter.convertToMovieDTO(responseMovie);
-        logger.debug("Get movie details :" + responseMovieDTO);
         return ResponseEntity.ok(responseMovieDTO);
     }
 
     @PutMapping(value="/movies/{id}",consumes= MediaType.APPLICATION_JSON_VALUE,headers="Accept=application/json")
     public ResponseEntity updateMovieDetails(@PathVariable(name = "id") int id, @RequestBody MovieDTO movieDTO,  @RequestHeader(value = "X-ACCESS-TOKEN") String accessToken) throws MovieDetailsNotFoundException, StatusDetailsNotFoundException, LanguageDetailsNotFoundException, APIException, ParseException, TheatreDetailsNotFoundException, CustomerDetailsNotFoundException, BadCredentialsException {
-        logger.debug("update movie details : movie id :" + id, movieDTO);
         /**
          * TODO : after spring security
         String username = jwtTokenProvider.getUsername(accessToken);
@@ -107,12 +101,9 @@ public class MovieController {
 
     @GetMapping(value="/movies",produces=MediaType.APPLICATION_JSON_VALUE,headers="Accept=application/json")
         public ResponseEntity getAllMovies(@RequestParam(defaultValue = "-1") int number) throws APIException {
-        logger.debug("Entered getAllMovies with number : " , number);
         if(number>0){
-                logger.debug("Limited number of movies to be returned :" + number);
                 List<Movie> movies = movieService.getAllMoviesDetails();
                 if(movies.size() < number) {
-                    logger.debug("Invalid number of movies");
                     throw new APIException("Invalid number of movies");
                 }
                 else{
@@ -129,7 +120,6 @@ public class MovieController {
                 for(Movie movie : movieList){
                     movieDTOList.add(entityDTOConverter.convertToMovieDTO(movie));
                 }
-                logger.debug("Returning all movies" , movieDTOList);
                 return ResponseEntity.ok(movieDTOList);
             }
     }
@@ -138,7 +128,6 @@ public class MovieController {
     @GetMapping(value="/movies/{movieId}/theatres",produces=MediaType.APPLICATION_JSON_VALUE,headers="Accept=application/json")
     public ResponseEntity findAllTheatresForMovie( @PathVariable("movieId") int movieId) throws MovieDetailsNotFoundException {
         Movie movie = movieService.getMovieDetails(movieId);
-        logger.debug("Find all theatres for movie :" + movie.getTheatres());
         return ResponseEntity.ok(movie.getTheatres());
     }
 
@@ -151,7 +140,6 @@ public class MovieController {
         theatres.remove(theatre);
         movie.setTheatres(theatres);
         movieService.updateMovieDetails(movieId, movie);
-        logger.debug("Remove theatre for movie :" + movieId + " theatre : " + theatreId);
         return ResponseEntity.ok(theatreService.updateTheatreDetails(theatreId, theatre));
     }
 
